@@ -1,0 +1,205 @@
+
+<div class="table">
+
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button styleClass="mr-2 p-button-success"
+                pRipple 
+                label="New" 
+                icon="pi pi-plus" 
+                (click)="openNew()"
+                 ></p-button>
+            <p-confirmDialog></p-confirmDialog>
+            <p-button 
+                pRipple 
+                styleClass="p-button-danger"
+                severity="danger" 
+                label="Delete" 
+                icon="pi pi-trash" 
+                (click)="deleteSelectedProducts()" 
+                [disabled]="!selectedProducts || !selectedProducts.length" ></p-button>
+        </ng-template>
+    </p-toolbar>
+
+
+    <p-table 
+    [value]="products" 
+    [tableStyle]="{ 'min-width': '25rem' }"
+    [paginator]="true"
+    [rows]="10"
+    styleClass="p-datatable-gridlines" 
+    [(selection)]="selectedProducts" 
+    dataKey="code" 
+    [rowsPerPageOptions]="[10, 25, 50]">
+     <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 2%"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+            <th pSortableColumn="code" style="width:40%">
+                Code <p-sortIcon field="code"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name" style="width:40%">
+                Name <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th  style="width:15%">Actions</th>
+        </tr>
+    </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                </td>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>
+                    <p-button 
+                        styleClass="p-button-rounded p-button-text"
+                        pRipple 
+                        icon="pi pi-pencil" 
+                        class="mr-1 " 
+                        severity="success" ></p-button>
+                    <p-button 
+                        styleClass="p-button-rounded p-button-text p-button-danger"
+                        pRipple 
+                        icon="pi pi-trash" 
+                        severity="danger" ></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+<!-- Pop-up pour ajouter un produit -->
+    
+    <p-dialog 
+        [(visible)]="productDialog" 
+        [style]="{ width: '450px' }" 
+        header="Product Details" 
+        [modal]="true" 
+        styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="code">Code *</label>
+                    <input class="inputs"
+                        type="text" 
+                        pInputText 
+                        id="code" 
+                        [(ngModel)]="product.code" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !product.code">
+                        Code is required.
+                    </small>
+                </div>
+                <div class="field">
+                    <label for="name">Name *</label>
+                    <input class="inputs"
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="product.name" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !product.name">
+                        Name is required.
+                    </small>
+                </div>
+                <div class="field">
+                    <label for="description">Description *</label>
+                    <textarea class="inputs"
+                        id="description" 
+                        pInputTextarea 
+                        [(ngModel)]="product.description" 
+                        required 
+                        rows="3" 
+                        cols="20">
+                    </textarea>
+                    <small class="p-error" *ngIf="submitted && !product.description">
+                        Description is required.
+                    </small>
+                </div>
+
+                <div class="field">
+                    <label for="inventoryStatus">Inventory Status *</label>
+                    <input class="inputs"
+                    id="inventoryStatus"
+                    type="text"
+                    pInputText
+                    [(ngModel)]="product.inventoryStatus"
+                    required
+                    autofocus/>
+                    <small class="p-error" *ngIf="submitted && !product.inventoryStatus">
+                        Inventory Status is required.
+                    </small>
+                </div>
+
+                <div class="field">
+                    <label for="category">Category *</label>
+                    <input class="inputs"
+                    id="category"
+                    type="text"
+                    pInputText
+                    [(ngModel)]="product.category"
+                    required
+                    autofocus/>
+                    <small class="p-error" *ngIf="submitted && !product.category">
+                        Category is required.
+                    </small>
+                </div>
+                <div class="field">
+                    <label for="image">Image</label>
+                    <input class="inputs"
+                    id="image"
+                    type="text"
+                    pInputText
+                    [(ngModel)]="product.image"
+                    autofocus/>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">Price *</label>
+                        <p-inputNumber class="inputs"
+                            id="price" 
+                            [(ngModel)]="product.price" 
+                            mode="currency" 
+                            currency="EUR" 
+                            locale="fr-FR"
+                            aria-required="required"></p-inputNumber>
+                        <small class="p-error" *ngIf="submitted && !product.price">
+                            Price is required.
+                        </small>
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">Quantity *</label>
+                        <p-inputNumber class="inputs"
+                            id="quantity" 
+                            [(ngModel)]="product.quantity"
+                            aria-required="required"></p-inputNumber>
+                        <small class="p-error" *ngIf="submitted && !product.quantity">
+                            Quantity is required.
+                        </small>
+                    </div>
+                    <div class="field col">
+                        <label for="rating">Rating</label>
+                        <p-inputNumber class="inputs"
+                            id="rating" 
+                            [(ngModel)]="product.rating"></p-inputNumber>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    pRipple 
+                    label="Cancel" 
+                    icon="pi pi-times" 
+                    (click)="hideDialog()"></p-button>
+                <p-button 
+                    pRipple 
+                    label="Save" 
+                    icon="pi pi-check" 
+                    (click)="postProduct()"></p-button>
+            </ng-template>
+    </p-dialog>
+</div>
+

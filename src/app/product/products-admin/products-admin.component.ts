@@ -71,14 +71,27 @@ export class ProductsAdminComponent implements OnInit {
         this.products.push(this.product);
         this.productDialog = false;
         this.product = {};
-    }
-      
+    } 
   }
 
   hideDialog() {
     this.productDialog = false;
     this.submitted = false;
   }
+
+  deleteProduct(product: Product) {
+    this.confirmationService.confirm({
+        message: 'Are you sure you want to delete ' + product.name + '?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.productService.deleteProduct(product.id).subscribe();
+            this.products = this.products.filter((val) => val.id !== product.id);
+            this.product = {};
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        }
+    });
+}
 
 
 }

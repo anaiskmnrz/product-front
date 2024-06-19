@@ -60,8 +60,7 @@ export class ProductsAdminComponent implements OnInit {
   postProduct() {
     this.submitted = true; 
 
-    if (this.product.name && this.product.code && this.product.description && this.product.inventoryStatus && this.product.category
-      && this.product.price && this.product.quantity) {
+    if (this.hasMandatoryParams()) {
       this.productService.postProduct(this.product.name, this.product.code, this.product.description, this.product.price, 
         this.product.category, this.product.quantity, this.product.inventoryStatus, this.product.image ? this.product.image : null, 
         this.product.rating ? this.product.rating : null).subscribe();
@@ -72,6 +71,11 @@ export class ProductsAdminComponent implements OnInit {
         this.productDialog = false;
         this.product = {};
     } 
+  }
+
+  private hasMandatoryParams() {
+    return this.product.name && this.product.code && this.product.description && this.product.inventoryStatus && this.product.category
+      && this.product.price && this.product.quantity;
   }
 
   hideDialog() {

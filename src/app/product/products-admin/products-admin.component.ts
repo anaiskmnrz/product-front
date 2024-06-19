@@ -91,7 +91,7 @@ export class ProductsAdminComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         }
     });
-}
+  }
 
 
 }

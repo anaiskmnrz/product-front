@@ -22,10 +22,9 @@ import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
-import { FormsModule } from '@angular/forms';
-import { FileUploadModule } from 'primeng/fileupload';
-import { DropdownModule } from 'primeng/dropdown';
+import { TagModule } from 'primeng/tag';
 import { RouterModule } from '@angular/router';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [AppComponent, ProductsAdminComponent, ProductsComponent],
@@ -46,11 +45,10 @@ import { RouterModule } from '@angular/router';
     TableModule, 
     ToastModule, 
     ToolbarModule, 
-    RippleModule, 
-    FormsModule, 
-    TableModule, 
-    FileUploadModule, 
-    DropdownModule
+    RippleModule,
+    DataViewModule, 
+    RatingModule,
+    TagModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },
